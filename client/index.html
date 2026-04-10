@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style>
+body { font-family: sans-serif; text-align: center; }
+#number { font-size: 48px; margin: 20px; }
+button { font-size: 20px; padding: 10px; }
+</style>
+</head>
+<body>
+
+<h2>Math Game</h2>
+<button onclick="start()">Start</button>
+<div id="number"></div>
+<input id="answer" type="number"/>
+<button onclick="submit()">Submit</button>
+
+<script>
+let numbers = [];
+let index = 0;
+let answer = 0;
+
+async function start() {
+  const res = await fetch("http://localhost:3000/question");
+  const data = await res.json();
+
+  numbers = data.numbers;
+  answer = data.answer;
+  index = 0;
+
+  stream();
+}
+
+function stream() {
+  if (index >= numbers.length) return;
+
+  document.getElementById("number").innerText = numbers[index];
+  index++;
+
+  setTimeout(stream, 1000);
+}
+
+function submit() {
+  const val = parseInt(document.getElementById("answer").value);
+
+  if (val === answer) {
+    alert("Correct!");
+  } else {
+    alert("Try again!");
+  }
+}
+</script>
+
+</body>
+</html>
