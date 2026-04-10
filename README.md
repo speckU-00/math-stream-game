@@ -7,3 +7,4 @@ node index.js
 
 ## Open Client
 Open client/index.html in browser
+# Math Stream Game
